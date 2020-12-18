@@ -1,0 +1,11 @@
+{
+  "spec": [
+    "HttpPacket/**/*.test.ts"
+  ],
+  "require": [
+    "ts-node/register",
+    "source-map-support/register"
+  ],
+  "full-trace": true,
+  "bail": true
+}

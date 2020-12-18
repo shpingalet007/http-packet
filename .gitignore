@@ -1,0 +1,16 @@
+# JetBrains Webstorm IDE caches
+/.idea
+
+# Node modules
+/node_modules
+
+# NYC coverage tests files
+/.nyc_output
+/coverage
+
+# Package lock
+package-lock.json
+
+# Loading only Typescript files. Ignore Javascript
+**/*.js
+**/*.js.*

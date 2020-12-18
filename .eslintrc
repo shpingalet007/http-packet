@@ -1,0 +1,40 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "rules": {
+    // Underscore variable names allowed
+    "@typescript-eslint/naming-convention": [
+      "warn",
+      {
+        "selector": "variable",
+        "format": [
+          "camelCase",
+          "strictCamelCase",
+          "PascalCase",
+          "StrictPascalCase",
+          "snake_case",
+          "UPPER_CASE"
+        ],
+        "leadingUnderscore": "allow"
+      }
+    ],
+    "import/extensions": [
+      "error",
+      "never",
+      {
+        "js": "always"
+      }
+    ]
+  },
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "extends": "airbnb-typescript/base",
+  "env": {
+    "browser": true,
+    "node": true
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "allowJs": false,
+    "target": "es2015",
+    "noImplicitAny": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "lib": ["es2015.promise", "es2015"]
+  },
+  "include": [
+    "HttpPacket/**/*.ts",
+    "types"
+  ],
+  "exclude": [
+    "coverage",
+    "node_modules"
+  ],
+  "ts-node": {
+    "files": true
+  }
+}
