@@ -2,10 +2,15 @@
   "name": "http-packet",
   "version": "0.1.0",
   "description": "HTTP crossplatform packet generator",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Shpingalet007/http-packet.git"
+  },
   "main": "src/index.js",
   "scripts": {
     "test": "mocha",
     "coverage": "npm run clean && nyc mocha",
+    "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "clean": "rimraf dist coverage .nyc_output",
     "build:commonjs": "babel src --out-dir lib",
     "build:umd": "webpack --config webpack.config.cjs",
@@ -32,6 +37,7 @@
     "@typescript-eslint/eslint-plugin": "^4.10.0",
     "babel-loader": "^8.2.2",
     "chai": "^4.2.0",
+    "coveralls": "^3.1.0",
     "cross-env": "^7.0.3",
     "eslint": "^7.15.0",
     "eslint-config-airbnb-typescript": "^12.0.0",
