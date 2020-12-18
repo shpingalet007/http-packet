@@ -98,7 +98,4 @@ describe('Export request. Checking some variations', () => {
 
     chai.expect(requestString).to.deep.equal(expectedReq);
   });
-  it('POST request for provided URL. Multipart/form-data', () => {
-    throw Error('Multipart form data not supported currently. Test is empty.');
-  });
 });
