@@ -1,6 +1,6 @@
 {
-  "name": "http-packet",
-  "version": "0.1.0",
+  "name": "@shpingalet007/http-packet",
+  "version": "0.2.1",
   "description": "HTTP crossplatform packet generator",
   "repository": {
     "type": "git",

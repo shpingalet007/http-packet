@@ -1,4 +1,7 @@
 import Encodings from '../HttpPacket/src/enums/encodings';
+import RequestMethods from "../HttpPacket/src/enums/methods";
+import { AnyRequestHeaders } from "./headers";
+import HttpVersions from "../HttpPacket/src/enums/httpVersions";
 
 interface StringKeyStringValue {
   [key: string]: string | undefined,
