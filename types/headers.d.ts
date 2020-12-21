@@ -1,5 +1,8 @@
 import Encodings from '../HttpPacket/src/enums/encodings';
-import { StringKeyStringValue } from './types';
+
+interface StringKeyStringValue {
+  [key: string]: string | undefined,
+}
 
 interface AnyHeaders extends StringKeyStringValue {}
 

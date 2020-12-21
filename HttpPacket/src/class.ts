@@ -2,19 +2,17 @@ import parseUrl from 'parseuri';
 import QueryString from 'query-string';
 import matchAll from '../../libs/RegexMatchAll';
 
-import { RequestHeaders } from '../../types/headers';
+import { RequestHeaders, StringKeyStringValue } from '../../types/headers';
 
 import HttpVersions from './enums/httpVersions';
 import RequestMethods from './enums/methods';
 import Encodings from './enums/encodings';
 import {
   GenerateFunctionArgs,
-  HttpRequestData,
   HttpRequestParameters,
   HttpResponseData,
-  TypeStringBuffer
-} from "../../types/arguments";
-import {StringKeyStringValue} from "../../types/types";
+  TypeStringBuffer,
+} from '../../types/arguments';
 
 const { parseUrl: parseQuery } = QueryString;
 
