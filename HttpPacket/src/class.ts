@@ -1,16 +1,26 @@
 import parseUrl from 'parseuri';
 import QueryString from 'query-string';
+import matchAll from '../../libs/RegexMatchAll';
 
-import { HttpPacketConstructorArgs } from '../../types/arguments';
 import { RequestHeaders } from '../../types/headers';
 
 import HttpVersions from './enums/httpVersions';
 import RequestMethods from './enums/methods';
 import Encodings from './enums/encodings';
+import {
+  GenerateFunctionArgs,
+  HttpRequestData,
+  HttpRequestParameters,
+  HttpResponseData,
+  TypeStringBuffer
+} from "../../types/arguments";
+import {StringKeyStringValue} from "../../types/types";
 
 const { parseUrl: parseQuery } = QueryString;
 
 class HttpPacket {
+  Static = HttpPacket;
+
   version: string = HttpVersions.v1_1;
 
   host: string = 'NULL_HOST';
@@ -34,7 +44,7 @@ class HttpPacket {
     queryParams,
     headers,
     body,
-  }: HttpPacketConstructorArgs) {
+  }: HttpRequestParameters) {
     const linkParsed = parseQuery(url);
 
     const urlQuery = linkParsed.query;
@@ -166,7 +176,26 @@ class HttpPacket {
     return encodedBody;
   };
 
-  outRequest(): string {
+  private static convertStringToBytes = (strReq: string): Uint8Array => {
+    const array = strReq
+      .split('')
+      .map((letter) => (
+        letter.charCodeAt(0)
+      ));
+
+    return Uint8Array.from(array);
+  };
+
+  private static convertBytesToString = (bytesRes: Uint8Array): string => {
+    let str = '';
+    bytesRes.forEach((byte) => {
+      str += String.fromCharCode(byte);
+    });
+
+    return str;
+  };
+
+  generate(type: GenerateFunctionArgs = 'string'): TypeStringBuffer {
     const ReqLine = this.#outRequestLine();
     const Headers = this.#outHeaders();
 
@@ -178,7 +207,56 @@ class HttpPacket {
       `\n${Body}`,
     ];
 
-    return merged.join('\n');
+    const strRequest = merged.join('\n');
+
+    if (type === 'buffer') {
+      return this.Static.convertStringToBytes(strRequest);
+    }
+
+    return strRequest;
+  }
+
+  static parse(request: TypeStringBuffer): HttpResponseData {
+    const Static = HttpPacket;
+
+    // Assume that is string
+    let strReq = request;
+
+    // Checking if is something else than string
+    if (typeof request !== 'string') {
+      strReq = Static.convertBytesToString(request);
+    }
+
+    const parts = (<string> strReq).split(/\n{2}/mg);
+    const head = parts.splice(0, 1)[0];
+    const content = parts.join('\n\n');
+
+    const regexResLine = /HTTP\/(?<httpVersion>\d\.\d)\s(?<statusCode>\d+)\s(?<statusDescription>.*)/mg;
+    const regexHeader = /(?<name>.*):\s(?<value>.*)/m;
+    // const regexBody = /\n{2}(.?\n?)*/mg;
+
+    const resLine = regexResLine.exec(<string> head).groups;
+
+    const headers: StringKeyStringValue = {};
+
+    matchAll(regexHeader, <string> head)
+      .forEach((match) => {
+        const headerName = match.groups.name;
+
+        headers[headerName] = match.groups.value;
+      });
+
+    const body = content;
+
+    return {
+      version: resLine.httpVersion,
+      status: {
+        code: Number.parseInt(resLine.statusCode, 10),
+        description: resLine.statusDescription,
+      },
+      headers,
+      body,
+    };
   }
 }
 
