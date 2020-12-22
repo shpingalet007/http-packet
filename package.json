@@ -6,7 +6,7 @@
     "type": "git",
     "url": "https://github.com/Shpingalet007/http-packet.git"
   },
-  "main": "src/index.js",
+  "main": "HttpPacket/src/class.ts",
   "scripts": {
     "test": "mocha",
     "coverage": "npm run clean && nyc mocha",
