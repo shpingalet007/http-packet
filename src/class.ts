@@ -1,6 +1,6 @@
 import parseUrl from 'parseuri';
 import QueryString from 'query-string';
-import matchAll from '../libs/RegexMatchAll';
+import matchAll from './libs/RegexMatchAll';
 
 import { RequestHeaders, StringKeyStringValue } from '../types/headers';
 

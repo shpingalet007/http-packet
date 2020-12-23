@@ -1,12 +1,17 @@
 {
   "name": "@shpingalet007/http-packet",
-  "version": "0.2.4",
+  "version": "0.2.6",
   "description": "HTTP crossplatform packet parser/generator",
   "repository": {
     "type": "git",
     "url": "https://github.com/Shpingalet007/http-packet.git"
   },
-  "main": "src/class.ts",
+  "main": "dist/class.ts",
+  "types": "dist/class.d.ts",
+  "files": [
+    "dist",
+    "types"
+  ],
   "scripts": {
     "test": "mocha",
     "coverage": "npm run clean && nyc mocha",
@@ -16,6 +21,7 @@
     "build:umd": "webpack --config webpack.config.cjs",
     "build:umd:min": "cross-env NODE_ENV=production npm run build:umd",
     "build": "npm run clean && npm run build:commonjs && npm run build:umd && npm run build:umd:min",
+    "build:module": "tsc",
     "lint": "eslint . --ext .ts,.d.ts"
   },
   "author": "",
