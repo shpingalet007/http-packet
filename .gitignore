@@ -4,7 +4,7 @@
 # Node modules
 /node_modules
 
-# NYC coverage tests files
+# NYC coverage test files
 /.nyc_output
 /coverage
 

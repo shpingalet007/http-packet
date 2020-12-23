@@ -1,8 +1,8 @@
 import parseUrl from 'parseuri';
 import QueryString from 'query-string';
-import matchAll from '../../libs/RegexMatchAll';
+import matchAll from '../libs/RegexMatchAll';
 
-import { RequestHeaders, StringKeyStringValue } from '../../types/headers';
+import { RequestHeaders, StringKeyStringValue } from '../types/headers';
 
 import HttpVersions from './enums/httpVersions';
 import RequestMethods from './enums/methods';
@@ -12,7 +12,7 @@ import {
   HttpRequestParameters,
   HttpResponseData,
   TypeStringBuffer,
-} from '../../types/arguments';
+} from '../types/arguments';
 
 const { parseUrl: parseQuery } = QueryString;
 
