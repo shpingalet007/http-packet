@@ -39,7 +39,7 @@ module.exports = [{
     /** Browser library UMD packer */
     mode: NODE_ENV || 'development',
     entry: [
-        './HttpPacket/src/class.ts',
+        './src/class.ts',
     ],
     optimization: {
         usedExports: true,
