@@ -1,4 +1,4 @@
-import Encodings from '../HttpPacket/src/enums/encodings';
+import Encodings from '../src/enums/encodings';
 
 interface FormData {
   encoding: Encodings,

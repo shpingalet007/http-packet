@@ -1,5 +1,5 @@
 import chai from 'chai';
-import HttpPacket from '../src/class';
+import HttpPacket from '../../src/class';
 
 describe('Parsing response', () => {
   it('Parsing from string', () => {

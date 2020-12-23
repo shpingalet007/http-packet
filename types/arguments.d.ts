@@ -1,6 +1,6 @@
-import RequestMethods from '../HttpPacket/src/enums/methods';
+import RequestMethods from '../src/enums/methods';
 import { AnyHeaders } from './headers';
-import HttpVersions from '../HttpPacket/src/enums/httpVersions';
+import HttpVersions from '../src/enums/httpVersions';
 import {
   ApplicationJsonBody, FormDataBody, TextPlainBody, UrlencodedBody,
 } from './types';

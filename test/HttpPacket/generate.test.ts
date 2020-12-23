@@ -1,9 +1,9 @@
 import chai from 'chai';
 
-import HttpPacket from '../src/class';
-import RequestMethods from '../src/enums/methods';
-import Encodings from '../src/enums/encodings';
-import HttpVersions from '../src/enums/httpVersions';
+import HttpPacket from '../../src/class';
+import RequestMethods from '../../src/enums/methods';
+import Encodings from '../../src/enums/encodings';
+import HttpVersions from '../../src/enums/httpVersions';
 
 describe('Export request to string. Checking some variations', () => {
   it('CONNECT request. Text/plain', () => {
