@@ -14,3 +14,6 @@ package-lock.json
 # Loading only Typescript files. Ignore Javascript
 **/*.js
 **/*.js.*
+
+# Other files
+.DS_Store

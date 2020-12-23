@@ -6,10 +6,9 @@ function matchAll(pattern: RegExp, str: string): MatchAllResult {
 
   const match_result = str.match(regex);
 
-  for (const index in match_result) {
-    const item = match_result[index];
-    matches[index] = item.match(new RegExp(pattern));
-  }
+  match_result.forEach((item, i) => {
+    matches[i] = item.match(new RegExp(pattern));
+  });
 
   return matches;
 }

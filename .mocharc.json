@@ -1,6 +1,6 @@
 {
   "spec": [
-    "HttpPacket/**/*.test.ts"
+    "test/HttpPacket/*.test.ts"
   ],
   "require": [
     "ts-node/register",
