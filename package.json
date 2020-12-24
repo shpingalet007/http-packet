@@ -1,6 +1,6 @@
 {
   "name": "@shpingalet007/http-packet",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "description": "HTTP crossplatform packet parser/generator",
   "repository": {
     "type": "git",
@@ -16,12 +16,11 @@
     "test": "mocha",
     "coverage": "npm run clean && nyc mocha",
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
-    "clean": "rimraf dist coverage .nyc_output",
-    "build:commonjs": "babel src --out-dir lib",
+    "clean:builds": "rimraf dist client-dist",
+    "clean:coverage": "rimraf coverage .nyc_output",
     "build:umd": "webpack --config webpack.config.cjs",
     "build:umd:min": "cross-env NODE_ENV=production npm run build:umd",
-    "build": "npm run clean && npm run build:commonjs && npm run build:umd && npm run build:umd:min",
-    "build:module": "tsc",
+    "build:commonjs": "tsc",
     "lint": "eslint . --ext .ts,.d.ts"
   },
   "author": "",

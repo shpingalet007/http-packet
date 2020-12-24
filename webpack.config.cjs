@@ -45,8 +45,8 @@ module.exports = [{
         usedExports: true,
     },
     output: {
-        path: path.join(__dirname, 'dist'),
-        filename: getFileName('index'),
+        path: path.join(__dirname, 'client-dist'),
+        filename: getFileName('http-packet'),
         libraryTarget: 'umd',
         globalObject: 'this',
     },
