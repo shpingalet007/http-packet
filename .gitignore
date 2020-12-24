@@ -8,6 +8,10 @@
 /.nyc_output
 /coverage
 
+# Transpiled versions
+/dist
+/client-dist
+
 # Package lock
 package-lock.json
 
