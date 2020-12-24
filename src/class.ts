@@ -62,18 +62,11 @@ class HttpPacket {
     this.host = urlParsed.host;
     this.path = urlParsed.path || '/';
 
-    const isUrlQueryEmpty = (
-      Object.keys(urlQuery).length === 0
-      || Object.keys(queryParams).length === 0
-    );
-
     // Populating QUERY object
-    if (!isUrlQueryEmpty) {
-      Object.assign(this.query, {
-        ...urlQuery,
-        ...queryParams,
-      });
-    }
+    Object.assign(this.query, {
+      ...urlQuery,
+      ...queryParams,
+    });
 
     // Populating ENCODING and BODY
     if (typeof body === 'object') {
@@ -198,6 +191,10 @@ class HttpPacket {
     const Headers = this.#outHeaders();
 
     const Body = this.#encodeBody();
+
+    if (Body.length) {
+      Headers.push(`Content-Length: ${Body.length}`);
+    }
 
     const merged = [
       ReqLine,

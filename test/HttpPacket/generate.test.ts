@@ -29,6 +29,7 @@ describe('Export request to string. Checking some variations', () => {
       'Host: example.com',
       'Content-Type: text/plain',
       'User-Agent: HttpPacket module',
+      'Content-Length: 12',
       '\nTest content',
     ].join('\n');
     const requestString = req.generate();
@@ -68,6 +69,7 @@ describe('Export request to string. Checking some variations', () => {
       'OPTIONS / HTTP/1.1',
       'Host: example.com',
       'Content-Type: application/json',
+      'Content-Length: 25',
       '\n{"a":100,"b":200,"c":300}',
     ].join('\n');
     const requestString = req.generate();
@@ -92,6 +94,7 @@ describe('Export request to string. Checking some variations', () => {
       'POST / HTTP/1.1',
       'Host: example.com',
       'Content-Type: application/x-www-form-urlencoded',
+      'Content-Length: 17',
       '\na=100&b=200&c=300',
     ].join('\n');
     const requestString = req.generate();
@@ -123,6 +126,7 @@ describe('Export request to bytes. Checking some variations', () => {
       'Host: example.com',
       'Content-Type: text/plain',
       'User-Agent: HttpPacket module',
+      'Content-Length: 12',
       '\nTest content',
     ].join('\n');
     const requestBytes = req.generate('buffer');
@@ -168,6 +172,7 @@ describe('Export request to bytes. Checking some variations', () => {
       'OPTIONS / HTTP/1.1',
       'Host: example.com',
       'Content-Type: application/json',
+      'Content-Length: 25',
       '\n{"a":100,"b":200,"c":300}',
     ].join('\n');
     const requestBytes = req.generate('buffer');
@@ -195,6 +200,7 @@ describe('Export request to bytes. Checking some variations', () => {
       'POST / HTTP/1.1',
       'Host: example.com',
       'Content-Type: application/x-www-form-urlencoded',
+      'Content-Length: 17',
       '\na=100&b=200&c=300',
     ].join('\n');
     const requestBytes = req.generate('buffer');
