@@ -22,3 +22,4 @@ package-lock.json
 # Other files
 .DS_Store
 .npmrc
+.tgz

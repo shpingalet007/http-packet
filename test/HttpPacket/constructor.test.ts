@@ -29,7 +29,7 @@ describe('Constructor checks', () => {
       method: RequestMethods.Connect,
       url: 'example.com/api/1/getData?a=100',
       headers: {
-        UserAgent: 'HttpPacket module',
+        'User-Agent': 'HttpPacket module',
       },
       queryParams: {
         b: 200,

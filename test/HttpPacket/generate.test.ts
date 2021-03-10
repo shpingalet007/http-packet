@@ -12,7 +12,7 @@ describe('Export request to string. Checking some variations', () => {
       method: RequestMethods.Connect,
       url: 'example.com/api/1/getData?a=100',
       headers: {
-        UserAgent: 'HttpPacket module',
+        'UserAgent': 'HttpPacket module',
       },
       queryParams: {
         b: 200,
