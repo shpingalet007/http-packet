@@ -8,6 +8,8 @@
     ]
   },
   "rules": {
+    "quote-props": ["error", "consistent", { "keywords": true }],
+
     // Underscore variable names allowed
     "@typescript-eslint/naming-convention": [
       "warn",

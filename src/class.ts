@@ -110,9 +110,13 @@ class HttpPacket {
     const headerNames = Object.keys(headers);
     const headersArray: Array<string> = [];
 
-    headerNames.forEach((camelHeaderName) => {
-      const HeaderName = this.#convertHeaderName(camelHeaderName);
-      const HeaderValue = headers[camelHeaderName];
+    headerNames.forEach((headerName) => {
+      const isCamelConvertionNeeded = (headerName[0] !== '_');
+
+      const HeaderName = (isCamelConvertionNeeded)
+        ? this.#convertHeaderName(headerName)
+        : headerName.slice(1);
+      const HeaderValue = headers[headerName];
 
       headersArray.push(`${HeaderName}: ${HeaderValue}`);
     });
