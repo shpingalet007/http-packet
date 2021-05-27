@@ -1,4 +1,3 @@
-// @ts-ignore
 enum RequestMethods {
   Get = 'get',
   Post = 'post',

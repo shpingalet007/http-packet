@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "outDir": "./dist",
+    "outDir": "./commonjs",
     "module": "commonjs",
-    "allowJs": true,
     "target": "es2015",
+    "allowJs": true,
     "noImplicitAny": true,
     "sourceMap": true,
     "moduleResolution": "node",

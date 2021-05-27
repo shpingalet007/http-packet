@@ -9,7 +9,7 @@ type GenerateFunctionArgs = 'buffer' | 'string';
 
 type TypeStringBuffer = Uint8Array | string;
 
-interface HttpRequestParameters {
+export interface HttpRequestParameters {
   url: string,
   method?: RequestMethods,
   queryParams?: object,

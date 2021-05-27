@@ -218,15 +218,19 @@ class HttpPacket {
   static parse(request: TypeStringBuffer): HttpResponseData {
     const Static = HttpPacket;
 
-    // Assume that is string
-    let strReq = request;
+    let strReq: string;
 
     // Checking if is something else than string
     if (typeof request !== 'string') {
       strReq = Static.convertBytesToString(request);
+    } else {
+      strReq = request;
     }
 
-    const parts = (<string> strReq).split(/\n{2}/mg);
+    // Replacing CRLF to LF as some servers using it
+    strReq = strReq.replace(/\r\n/g, '\n');
+
+    const parts = strReq.split(/\n{2}/mg);
     const head = parts.splice(0, 1)[0];
     const content = parts.join('\n\n');
 
