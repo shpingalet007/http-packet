@@ -203,10 +203,10 @@ class HttpPacket {
     const merged = [
       ReqLine,
       ...Headers,
-      `\n${Body}`,
+      `\r\n${Body}`,
     ];
 
-    const strRequest = merged.join('\n');
+    const strRequest = merged.join('\r\n');
 
     if (type === 'buffer') {
       return this.Static.convertStringToBytes(strRequest);

@@ -30,8 +30,8 @@ describe('Export request to string. Checking some variations', () => {
       'Content-Type: text/plain',
       'User-Agent: HttpPacket module',
       'Content-Length: 12',
-      '\nTest content',
-    ].join('\n');
+      '\r\nTest content',
+    ].join('\r\n');
     const requestString = req.generate();
 
     chai.expect(requestString).to.deep.equal(expectedReq);
@@ -45,8 +45,8 @@ describe('Export request to string. Checking some variations', () => {
     const expectedReq = [
       'PUT / HTTP/1.1',
       'Host: example.com',
-      '\n',
-    ].join('\n');
+      '\r\n',
+    ].join('\r\n');
     const requestString = req.generate();
 
     chai.expect(expectedReq).to.deep.equal(requestString);
@@ -70,8 +70,8 @@ describe('Export request to string. Checking some variations', () => {
       'Host: example.com',
       'Content-Type: application/json',
       'Content-Length: 25',
-      '\n{"a":100,"b":200,"c":300}',
-    ].join('\n');
+      '\r\n{"a":100,"b":200,"c":300}',
+    ].join('\r\n');
     const requestString = req.generate();
 
     chai.expect(requestString).to.deep.equal(expectedReq);
@@ -95,8 +95,8 @@ describe('Export request to string. Checking some variations', () => {
       'Host: example.com',
       'Content-Type: application/x-www-form-urlencoded',
       'Content-Length: 17',
-      '\na=100&b=200&c=300',
-    ].join('\n');
+      '\r\na=100&b=200&c=300',
+    ].join('\r\n');
     const requestString = req.generate();
 
     chai.expect(requestString).to.deep.equal(expectedReq);
@@ -127,8 +127,8 @@ describe('Export request to bytes. Checking some variations', () => {
       'Content-Type: text/plain',
       'User-Agent: HttpPacket module',
       'Content-Length: 12',
-      '\nTest content',
-    ].join('\n');
+      '\r\nTest content',
+    ].join('\r\n');
     const requestBytes = req.generate('buffer');
 
     // @ts-ignore
@@ -145,8 +145,8 @@ describe('Export request to bytes. Checking some variations', () => {
     const expectedReq = [
       'PUT / HTTP/1.1',
       'Host: example.com',
-      '\n',
-    ].join('\n');
+      '\r\n',
+    ].join('\r\n');
     const requestBytes = req.generate('buffer');
 
     // @ts-ignore
@@ -173,8 +173,8 @@ describe('Export request to bytes. Checking some variations', () => {
       'Host: example.com',
       'Content-Type: application/json',
       'Content-Length: 25',
-      '\n{"a":100,"b":200,"c":300}',
-    ].join('\n');
+      '\r\n{"a":100,"b":200,"c":300}',
+    ].join('\r\n');
     const requestBytes = req.generate('buffer');
 
     // @ts-ignore
@@ -201,8 +201,8 @@ describe('Export request to bytes. Checking some variations', () => {
       'Host: example.com',
       'Content-Type: application/x-www-form-urlencoded',
       'Content-Length: 17',
-      '\na=100&b=200&c=300',
-    ].join('\n');
+      '\r\na=100&b=200&c=300',
+    ].join('\r\n');
     const requestBytes = req.generate('buffer');
 
     // @ts-ignore
