@@ -1,6 +1,7 @@
 import parseUrl from 'parseuri';
 import QueryString from 'query-string';
 import matchAll from './libs/RegexMatchAll';
+import Base64 from './libs/Base64Provider';
 
 import { RequestHeaders, StringKeyStringValue } from '../types/headers';
 
@@ -13,11 +14,17 @@ import {
   HttpResponseData,
   TypeStringBuffer,
 } from '../types/arguments';
+import { Authentication, AuthenticationCreds } from '../types/auth';
+import AuthTypes from './enums/auth';
+
+const { atob } = Base64;
 
 const { parseUrl: parseQuery } = QueryString;
 
 class HttpPacket {
   Static = HttpPacket;
+
+  auth: Authentication;
 
   version: string = HttpVersions.v1_1;
 
@@ -36,6 +43,7 @@ class HttpPacket {
   body?: object | string;
 
   constructor({
+    authentication,
     version,
     method,
     url,
@@ -47,6 +55,11 @@ class HttpPacket {
 
     const urlQuery = linkParsed.query;
     const urlParsed = parseUrl(linkParsed.url);
+
+    // Auth header data
+    if (authentication) {
+      this.auth = authentication;
+    }
 
     // Version parameter
     if (version) {
@@ -105,7 +118,13 @@ class HttpPacket {
   };
 
   #outHeaders = (): Array<string> => {
-    const { headers } = this;
+    // Cloning headers
+    const headers = { ...this.headers };
+
+    // Setting Authorization header params
+    if (this.auth) {
+      headers.Authorization = HttpPacket.processAuthData(this.auth.type, this.auth.credentials);
+    }
 
     const headerNames = Object.keys(headers);
     const headersArray: Array<string> = [];
@@ -189,6 +208,22 @@ class HttpPacket {
 
     return str;
   };
+
+  private static processAuthData(type: AuthTypes, data: AuthenticationCreds) {
+    function processBasic() {
+      const rawData = `${data.username}:${data.password}`;
+      const baseData = atob(rawData);
+
+      return `Basic ${baseData}`;
+    }
+
+    switch (type) {
+      case AuthTypes.Basic: return processBasic();
+      default: break;
+    }
+
+    throw new Error('Authentication header preparation failed');
+  }
 
   generate(type: GenerateFunctionArgs = 'string'): TypeStringBuffer {
     const ReqLine = this.#outRequestLine();
