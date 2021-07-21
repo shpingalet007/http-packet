@@ -1,3 +1,6 @@
+import isBrowser from './WebpackEnvRunner';
+
+// coverage:ignore-start
 function browserAtob(data: string): string {
   return window.atob(data);
 }
@@ -5,6 +8,7 @@ function browserAtob(data: string): string {
 function browserBtoa(data: string): string {
   return window.btoa(data);
 }
+// coverage:ignore-end
 
 function nodeAtob(data: string): string {
   const buff = Buffer.from(data);
@@ -18,7 +22,7 @@ function nodeBtoa(data: string): string {
 }
 
 function getAtobFunc() {
-  if (process.env.BROWSER) {
+  if (isBrowser()) {
     return browserAtob;
   }
 
@@ -26,7 +30,7 @@ function getAtobFunc() {
 }
 
 function getBtoaFunc() {
-  if (process.env.BROWSER) {
+  if (isBrowser()) {
     return browserBtoa;
   }
 

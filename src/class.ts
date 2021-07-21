@@ -1,3 +1,5 @@
+import './libs/WebpackEnvRunner';
+
 import parseUrl from 'parseuri';
 import QueryString from 'query-string';
 import matchAll from './libs/RegexMatchAll';
@@ -14,7 +16,12 @@ import {
   HttpResponseData,
   TypeStringBuffer,
 } from '../types/arguments';
-import { Authentication, AuthenticationCreds } from '../types/auth';
+import {
+  Authentication,
+  AuthenticationCredentials,
+  AuthenticationData,
+  AuthenticationToken,
+} from '../types/auth';
 import AuthTypes from './enums/auth';
 
 const { atob } = Base64;
@@ -209,17 +216,24 @@ class HttpPacket {
     return str;
   };
 
-  private static processAuthData(type: AuthTypes, data: AuthenticationCreds) {
-    function processBasic() {
-      const rawData = `${data.username}:${data.password}`;
+  private static processAuthData(type: AuthTypes, data: AuthenticationData) {
+    function processBasic(credentials: AuthenticationCredentials) {
+      const rawData = `${credentials.username}:${credentials.password}`;
       const baseData = atob(rawData);
 
       return `Basic ${baseData}`;
     }
+    function processBearer(tokenData: AuthenticationToken) {
+      return `Bearer ${tokenData.token}`;
+    }
 
     switch (type) {
-      case AuthTypes.Basic: return processBasic();
-      default: break;
+      case AuthTypes.Basic:
+        return processBasic(<AuthenticationCredentials> data);
+      case AuthTypes.Bearer:
+        return processBearer(<AuthenticationToken> data);
+      default:
+        break;
     }
 
     throw new Error('Authentication header preparation failed');

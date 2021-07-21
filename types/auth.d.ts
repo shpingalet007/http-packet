@@ -1,11 +1,24 @@
 import AuthTypes from '../src/enums/auth';
 
-interface Authentication {
-  type: AuthTypes,
-  credentials: AuthenticationCreds,
+type Authentication = AuthBasic | AuthBearer;
+
+interface AuthBasic {
+  type: AuthTypes.Basic,
+  credentials: AuthenticationCredentials,
 }
 
-interface AuthenticationCreds {
+interface AuthBearer {
+  type: AuthTypes.Bearer,
+  credentials: AuthenticationToken,
+}
+
+type AuthenticationData = AuthenticationCredentials | AuthenticationToken;
+
+interface AuthenticationCredentials {
   username: string,
   password: string,
+}
+
+interface AuthenticationToken {
+  token: string,
 }
