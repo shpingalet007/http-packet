@@ -151,9 +151,17 @@ class HttpPacket {
   };
 
   #convertHeaderName = (camelHeaderName: string): string => {
-    const CapitalSeparator = /([A-Z][a-z]+)/g;
+    const CapitalSeparator = /(?=[A-Z])/g;
 
-    const headersParts = <RegExpMatchArray> camelHeaderName.match(CapitalSeparator);
+    const headersParts = <RegExpMatchArray> camelHeaderName
+      .split(CapitalSeparator)
+      .map((part) => {
+        // @ts-ignore
+        const upperPart = Object.values({ ...part });
+        // @ts-ignore
+        upperPart[0] = upperPart[0].toUpperCase();
+        return upperPart.join('');
+      });
 
     return headersParts.join('-');
   };
@@ -165,7 +173,7 @@ class HttpPacket {
     let urlencoded = Object.values(keys);
 
     urlencoded = urlencoded.map((key: string, i) => {
-      const value = values[i];
+      const value = encodeURI(values[i]);
 
       return `${key}=${value}`;
     });
