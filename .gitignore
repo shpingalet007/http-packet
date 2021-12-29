@@ -10,7 +10,7 @@
 
 # Transpiled versions
 /dist
-/client-dist
+/commonjs
 
 # Package lock
 package-lock.json

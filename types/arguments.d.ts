@@ -4,13 +4,15 @@ import HttpVersions from '../src/enums/httpVersions';
 import {
   ApplicationJsonBody, FormDataBody, TextPlainBody, UrlencodedBody,
 } from './types';
+import { Authentication } from './auth';
 
 type GenerateFunctionArgs = 'buffer' | 'string';
 
 type TypeStringBuffer = Uint8Array | string;
 
-interface HttpRequestParameters {
+export interface HttpRequestParameters {
   url: string,
+  authentication?: Authentication,
   method?: RequestMethods,
   queryParams?: object,
   headers?: AnyHeaders,

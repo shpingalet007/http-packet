@@ -7,5 +7,5 @@
     "source-map-support/register"
   ],
   "full-trace": true,
-  "bail": true
+  "bail": false
 }

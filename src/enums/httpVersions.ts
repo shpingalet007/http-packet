@@ -1,4 +1,3 @@
-// @ts-ignore
 enum HttpVersions {
   v0_9 = '0.9',
   v1_0 = '1.0',

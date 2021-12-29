@@ -69,4 +69,18 @@ describe('Parsing response', () => {
 
     chai.expect(resObj).to.deep.equal(expectedObj);
   });
+  it('', () => {
+    const httpRes = 'HTTP/1.1 200 OK\n' +
+        'Server: Cowboy\n' +
+        'Connection: close\n' +
+        'Content-Type: application/json\n' +
+        'Vary: Origin\n' +
+        'Date: Thu, 01 Apr 2021 11:50:26 GMT\n' +
+        'Content-Length: 22\n' +
+        'Via: 1.1 vegur\n' +
+        '\n' +
+        '{"ip":"156.146.62.52"}';
+
+    console.log(HttpPacket.parse(httpRes));
+  });
 });

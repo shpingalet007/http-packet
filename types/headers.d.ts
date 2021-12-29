@@ -4,7 +4,7 @@ interface StringKeyStringValue {
   [key: string]: string | undefined,
 }
 
-interface AnyHeaders extends StringKeyStringValue {}
+export interface AnyHeaders extends StringKeyStringValue {}
 
 interface RequestHeaders extends AnyHeaders {
   Host: string,

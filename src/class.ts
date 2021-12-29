@@ -1,6 +1,9 @@
+import './libs/WebpackEnvRunner';
+
 import parseUrl from 'parseuri';
 import QueryString from 'query-string';
 import matchAll from './libs/RegexMatchAll';
+import Base64 from './libs/Base64Provider';
 
 import { RequestHeaders, StringKeyStringValue } from '../types/headers';
 
@@ -13,11 +16,22 @@ import {
   HttpResponseData,
   TypeStringBuffer,
 } from '../types/arguments';
+import {
+  Authentication,
+  AuthenticationCredentials,
+  AuthenticationData,
+  AuthenticationToken,
+} from '../types/auth';
+import AuthTypes from './enums/auth';
+
+const { atob } = Base64;
 
 const { parseUrl: parseQuery } = QueryString;
 
 class HttpPacket {
   Static = HttpPacket;
+
+  auth: Authentication;
 
   version: string = HttpVersions.v1_1;
 
@@ -36,6 +50,7 @@ class HttpPacket {
   body?: object | string;
 
   constructor({
+    authentication,
     version,
     method,
     url,
@@ -47,6 +62,11 @@ class HttpPacket {
 
     const urlQuery = linkParsed.query;
     const urlParsed = parseUrl(linkParsed.url);
+
+    // Auth header data
+    if (authentication) {
+      this.auth = authentication;
+    }
 
     // Version parameter
     if (version) {
@@ -105,7 +125,13 @@ class HttpPacket {
   };
 
   #outHeaders = (): Array<string> => {
-    const { headers } = this;
+    // Cloning headers
+    const headers = { ...this.headers };
+
+    // Setting Authorization header params
+    if (this.auth) {
+      headers.Authorization = HttpPacket.processAuthData(this.auth.type, this.auth.credentials);
+    }
 
     const headerNames = Object.keys(headers);
     const headersArray: Array<string> = [];
@@ -125,9 +151,17 @@ class HttpPacket {
   };
 
   #convertHeaderName = (camelHeaderName: string): string => {
-    const CapitalSeparator = /([A-Z][a-z]+)/g;
+    const CapitalSeparator = /(?=[A-Z])/g;
 
-    const headersParts = <RegExpMatchArray> camelHeaderName.match(CapitalSeparator);
+    const headersParts = <RegExpMatchArray> camelHeaderName
+      .split(CapitalSeparator)
+      .map((part) => {
+        // @ts-ignore
+        const upperPart = Object.values({ ...part });
+        // @ts-ignore
+        upperPart[0] = upperPart[0].toUpperCase();
+        return upperPart.join('');
+      });
 
     return headersParts.join('-');
   };
@@ -139,7 +173,7 @@ class HttpPacket {
     let urlencoded = Object.values(keys);
 
     urlencoded = urlencoded.map((key: string, i) => {
-      const value = values[i];
+      const value = encodeURI(values[i]);
 
       return `${key}=${value}`;
     });
@@ -190,6 +224,29 @@ class HttpPacket {
     return str;
   };
 
+  private static processAuthData(type: AuthTypes, data: AuthenticationData) {
+    function processBasic(credentials: AuthenticationCredentials) {
+      const rawData = `${credentials.username}:${credentials.password}`;
+      const baseData = atob(rawData);
+
+      return `Basic ${baseData}`;
+    }
+    function processBearer(tokenData: AuthenticationToken) {
+      return `Bearer ${tokenData.token}`;
+    }
+
+    switch (type) {
+      case AuthTypes.Basic:
+        return processBasic(<AuthenticationCredentials> data);
+      case AuthTypes.Bearer:
+        return processBearer(<AuthenticationToken> data);
+      default:
+        break;
+    }
+
+    throw new Error('Authentication header preparation failed');
+  }
+
   generate(type: GenerateFunctionArgs = 'string'): TypeStringBuffer {
     const ReqLine = this.#outRequestLine();
     const Headers = this.#outHeaders();
@@ -203,10 +260,10 @@ class HttpPacket {
     const merged = [
       ReqLine,
       ...Headers,
-      `\n${Body}`,
+      `\r\n${Body}`,
     ];
 
-    const strRequest = merged.join('\n');
+    const strRequest = merged.join('\r\n');
 
     if (type === 'buffer') {
       return this.Static.convertStringToBytes(strRequest);
@@ -218,15 +275,19 @@ class HttpPacket {
   static parse(request: TypeStringBuffer): HttpResponseData {
     const Static = HttpPacket;
 
-    // Assume that is string
-    let strReq = request;
+    let strReq: string;
 
     // Checking if is something else than string
     if (typeof request !== 'string') {
       strReq = Static.convertBytesToString(request);
+    } else {
+      strReq = request;
     }
 
-    const parts = (<string> strReq).split(/\n{2}/mg);
+    // Replacing CRLF to LF as some servers using it
+    strReq = strReq.replace(/\r\n/g, '\n');
+
+    const parts = strReq.split(/\n{2}/mg);
     const head = parts.splice(0, 1)[0];
     const content = parts.join('\n\n');
 

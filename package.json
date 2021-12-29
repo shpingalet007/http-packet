@@ -1,17 +1,17 @@
 {
   "name": "@shpingalet007/http-packet",
-  "version": "0.2.11",
+  "version": "0.2.15",
   "description": "HTTP crossplatform packet parser/generator",
   "repository": {
     "type": "git",
     "url": "https://github.com/Shpingalet007/http-packet.git"
   },
-  "main": "dist/class.js",
-  "types": "dist/class.d.ts",
+  "main": "commonjs/class.js",
+  "module": "dist/bundle.js",
   "files": [
     "src",
-    "client-dist",
     "dist",
+    "commonjs",
     "types"
   ],
   "scripts": {
@@ -19,22 +19,31 @@
     "coverage": "npm run clean:coverage && nyc mocha",
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "clean": "npm run clean:builds && npm run clean:coverage",
-    "clean:builds": "rimraf dist client-dist",
+    "clean:builds": "rimraf commonjs dist",
     "clean:coverage": "rimraf coverage .nyc_output",
     "build:umd": "webpack --config webpack.config.cjs",
     "build:umd:min": "cross-env NODE_ENV=production npm run build:umd",
-    "build:commonjs": "tsc",
-    "build:all": "npm run build:umd && npm run build:umd:min && npm run build:commonjs",
+    "build:umd:all": "npm run build:umd && npm run build:umd:min",
+    "build:cjs:deprecated": "tsc",
+    "build:cjs:ts": "babel src --out-dir commonjs --extensions .ts",
+    "build:cjs:dts": "tsc --emitDeclarationOnly",
+    "build:cjs:all": "npm run build:cjs:ts && npm run build:cjs:dts",
+    "build:all": "npm run build:umd:all && npm run build:cjs:all",
     "lint": "eslint src --ext .ts,.d.ts"
   },
   "author": "",
   "license": "ISC",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "dependencies": {
+    "@babel/core": "^7.14.0",
+    "babel-core": "^7.0.0-bridge.0",
     "parseuri": "0.0.6",
     "query-string": "^6.13.7"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.10",
+    "@babel/cli": "^7.13.16",
     "@babel/plugin-proposal-class-properties": "^7.12.1",
     "@babel/plugin-proposal-object-rest-spread": "^7.12.1",
     "@babel/plugin-proposal-private-methods": "^7.12.1",
