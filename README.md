@@ -1,6 +1,7 @@
 # http-packet
 
-[![Build Status](https://travis-ci.com/Shpingalet007/http-packet.svg?branch=main)](https://travis-ci.com/Shpingalet007/http-packet)  
+[![Build Status](https://travis-ci.com/Shpingalet007/http-packet.svg?branch=main)](https://travis-ci.com/Shpingalet007/http-packet) [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fshpingalet007%2Fhttp-packet.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fshpingalet007%2Fhttp-packet?ref=badge_shield)
+ 
 [![Coverage Status](https://coveralls.io/repos/github/Shpingalet007/http-packet/badge.svg?branch=main)](https://coveralls.io/github/Shpingalet007/http-packet?branch=main)
 
 HTTP crossplatform request generator. It allows generating and parsing HTTP 1.1 requests. May be used with net.Socket or any other transport. Working on browser and node.
@@ -118,3 +119,7 @@ Settings are passed on instance construction. Full list is next:
 	queryParams: object, (default: null)
 	headers: object, (default: null)
 	body: ApplicationJsonBody | FormDataBody | UrlencodedBody | TextPlainBody
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fshpingalet007%2Fhttp-packet.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fshpingalet007%2Fhttp-packet?ref=badge_large)
