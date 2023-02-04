@@ -1,15 +1,14 @@
 {
-  "name": "@shpingalet007/http-packet",
-  "version": "0.2.15",
+  "name": "http-packet",
+  "version": "0.2.16",
   "description": "HTTP crossplatform packet parser/generator",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Shpingalet007/http-packet.git"
+    "url": "https://github.com/shpingalet007/http-packet.git"
   },
   "main": "commonjs/class.js",
   "module": "dist/bundle.js",
   "files": [
-    "src",
     "dist",
     "commonjs",
     "types"
@@ -33,9 +32,6 @@
   },
   "author": "",
   "license": "ISC",
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  },
   "dependencies": {
     "@babel/core": "^7.14.0",
     "babel-core": "^7.0.0-bridge.0",
